@@ -17,8 +17,8 @@ class Content{
 	public:
 		Content(string n, string o, string w, string i, string s, string oD, string cD, string sD, string res) : name(n), organization(o), website(w), internship(i), scholarship(s), openDate(oD), closeDate(cD), startDate(sD), result(res){}
 		
-		string getName(){return name;}
-		string getOrganization(){return organization;}
+		string  getName() const {return name;}
+		string getOrganization() const {return organization;}
 		string getWebsite(){return website;}
 		string isInternship(){return internship;}
 		string isScholarship(){return scholarship;}
