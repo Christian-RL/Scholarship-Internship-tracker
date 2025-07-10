@@ -6,7 +6,15 @@
 
 using namespace std;
 
+bool interface();
 
+void clearScreen() {
+	#ifdef _WIN32
+		system("CLS");
+	#else
+		system("clear");
+	#endif
+}
 
 vector<Content> contents;
 
@@ -64,8 +72,22 @@ bool loadList(){
 	return true;
 }
 
+
 bool interfaceExit(){
-	return saveList();
+	cout<<"Would you like to save and exit? Reply yes or no: "<<endl;
+	while(true){
+		string reply;
+		cin>>reply;
+		if(reply == "yes"){
+			cout<<"Saving and exiting"<<endl;
+			saveList();
+			exit(0);
+		}
+		else if(reply == "no"){
+			cout<<"Exiting without saving"<<endl;
+			exit(0);
+		}else cout<<"Please reply yes or no: "<<endl;
+	}
 }
 
 string CollectString(string msg){
@@ -85,47 +107,80 @@ void addEntry(){
 	string cd = CollectString("Entry Closing Date: ");
 	string sd = CollectString("Entry Starting Date: ");
 	string res = CollectString("Entry Current Status: ");
-	contents.push_back(Content(name, org, web, intern, schol, od, cd, sd, res));
-	
+	Content c = Content(name, org, web, intern, schol, od, cd, sd, res);
+	contents.push_back(c);
+	cout<<endl<<"Entry: "<< endl<<endl<<c.display()<<" added successfully."<<endl<<endl;
+	interface();
 	
 }
 
-void viewNext(){
-	
+void removeEntry(){
+    cout << endl << "Entry name to remove: ";
+    string entryName;
+    getline(cin, entryName);
+
+    cout << endl << "Organization name of entry to remove: ";
+    string orgName;
+    getline(cin, orgName);
+
+    auto oldSize = contents.size();
+    contents.erase(
+        remove_if(contents.begin(), contents.end(),
+                  [&entryName, &orgName](const Content& c) {
+                      return c.getName() == entryName && c.getOrganization() == orgName;
+                  }),
+        contents.end()
+    );
+
+    if (contents.size() < oldSize) {
+        cout << "Entry with name \"" << entryName << "\" was removed." << endl;
+    } else {
+        cout << "No entry found." << endl;
+    }
+    cout<<endl;
+    interface();
 }
 
 void viewAll(){
 	for(auto it = contents.begin(); it != contents.end(); ++it){
 		cout<<it->display()<<endl;
 	}
+	cout<<endl;
+	interface();
 }
 
 bool interface(){
-	while (true) {
-		cout << "What would you like to do?" << endl
+	cout <<endl<< "What would you like to do?" << endl
 		     << "- Add Entry" << endl
-		     << "- View Next Due" << endl
+		     << "- Remove Entry" << endl
 		     << "- View All" << endl
+		     << "- Save" << endl
 		     << "- Exit" << endl;
+	while (true) {
+		
 
 		string command;
 		
 		getline(cin, command);
+		clearScreen();
 
 		if (command == "Add Entry") {
 			addEntry();
 		}
-		else if (command == "View Next Due") {
-			viewNext();
+		else if(command == "Remove Entry"){
+			removeEntry();
 		}
 		else if (command == "View All") {
 			viewAll();
+		}
+		else if(command == "Save"){
+			saveList();
 		}
 		else if (command == "Exit") {
 			return interfaceExit();
 		}
 		else {
-			cout <<"Command was: " << command << "Please reply with: Add Entry, View Next Due, View All, or Exit" << endl;
+			cout <<"Command was: " << command << ". Please reply with: Add Entry, View Next Due, View All, or Exit" << endl;
 		}
 	}
 }
@@ -136,4 +191,5 @@ int main(void){
 	interface();
 	
 }
+
 
