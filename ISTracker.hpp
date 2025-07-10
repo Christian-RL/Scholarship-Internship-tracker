@@ -1,4 +1,5 @@
 #include <string>
+#include <iostream>
 
 using namespace std;
 
@@ -6,39 +7,26 @@ class Content{
 		string name;
 		string organization;
 		string website;
-		bool internship;
-		bool scholarship;
+		string internship;
+		string scholarship;
 		string openDate;
 		string closeDate;
 		string startDate;
+		string result;
 	public:
-		Content(string n, string o, string w, bool i, bool s, string oD, string cD, string sD) : name(n), organization(o), website(w), internship(i), scholarship(s), openDate(oD), closeDate(cD), startDate(sD){}
+		Content(string n, string o, string w, string i, string s, string oD, string cD, string sD, string res) : name(n), organization(o), website(w), internship(i), scholarship(s), openDate(oD), closeDate(cD), startDate(sD), result(res){}
 		
 		string getName(){return name;}
 		string getOrganization(){return organization;}
 		string getWebsite(){return website;}
-		bool isInternship(){return internship;}
-		bool isScholarship(){return scholarship;}
+		string isInternship(){return internship;}
+		string isScholarship(){return scholarship;}
 		string getoD(){return openDate;}
 		string getcD(){return closeDate;}
 		string getsD(){return startDate;}
+		string getRes(){return result;}
+		friend ostream& operator<<(ostream& os, const Content& c);
 		
-		string toString(){
-			string intV;
-			string scholV;
-			if(internship) intV = "Yes";
-			else intV = "";
-			if(scholarship) scholV = "Yes";
-			else scholV = "";
-			
-			string toReturn = name + "\t" + 
-								organization + "\t" +
-								website + "\t" +
-								intV + "\t" +
-								scholV + "\t" +
-								openDate + "\t" +
-								closeDate + "\t" +
-								startDate;
-			return toReturn;
-		}
+		
 };
+
