@@ -1,5 +1,6 @@
 #include <string>
 #include <iostream>
+#include <sstream>
 
 using namespace std;
 
@@ -27,6 +28,22 @@ class Content{
 		string getRes(){return result;}
 		friend ostream& operator<<(ostream& os, const Content& c);
 		
+		string display(){
+			ostringstream oss;
+			oss << "Name: " << name << endl <<
+					"Organization: " << organization << endl <<
+					"Website: " << website << endl <<
+					"Is an Internship: " << internship << endl <<
+					"Is a Scholarship: " << scholarship << endl <<
+					"Application Open Date: " << openDate << endl <<
+					"Application Close Date: " << closeDate << endl <<
+					"Effective Start Date: " << startDate << endl <<
+					"Current Result of Application: " << result << endl << endl;
+			return oss.str();
+					
+		}
+		
 		
 };
+
 
