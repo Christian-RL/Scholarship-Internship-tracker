@@ -96,7 +96,7 @@ void viewNext(){
 
 void viewAll(){
 	for(auto it = contents.begin(); it != contents.end(); ++it){
-		cout<<*it<<endl;
+		cout<<it->display()<<endl;
 	}
 }
 
